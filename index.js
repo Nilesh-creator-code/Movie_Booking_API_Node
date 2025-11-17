@@ -2,7 +2,9 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const env = require('dotenv')
 const mongoose = require('mongoose')
-const Movie = require('./models/movie.model')
+
+const MovieRoutes = require('./routes/movie.routes')
+
 
 env.config()
 const app = express();          //express app object
@@ -11,6 +13,8 @@ const app = express();          //express app object
 //Configuring the body parser 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json());
+
+MovieRoutes(app);   //Invoking movie routes
 
 app.get('/home', (req, res) => {
     console.log("Hitting /Home");
@@ -28,8 +32,8 @@ app.listen(process.env.PORT, async() => {
 
     try {
         
-    // await mongoose.connect(process.env.DB_URL);         //Connect to the mongo server
-    // console.log("Successfully connected to the mongodb ")
+    await mongoose.connect(process.env.DB_URL);         //Connect to the mongo server
+    console.log("Successfully connected to the mongodb ")
     // await Movie.create({
     // name: "Bachhan Pandey",
     // description: "Comedy Masala Movies",
