@@ -9,7 +9,8 @@ const mongoose = require('mongoose');
 const theatreScheme = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        minLength: 5
     },
     description: String,
     city: {
