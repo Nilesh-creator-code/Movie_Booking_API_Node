@@ -4,6 +4,7 @@ const env = require('dotenv')
 const mongoose = require('mongoose')
 
 const MovieRoutes = require('./routes/movie.routes')
+const TheatreRoutes = require('./routes/theatre.routes')
 
 
 env.config()
@@ -14,7 +15,9 @@ const app = express();          //express app object
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json());
 
-MovieRoutes(app);   //Invoking movie routes
+//Invoking movie routes
+MovieRoutes(app);
+TheatreRoutes(app);  //Invoking theatre routes
 
 app.get('/home', (req, res) => {
     console.log("Hitting /Home");
