@@ -1,30 +1,68 @@
-/**
- * Middleware to validate movie create request
- */
+const badRequestResponse = {
+    success: false,
+    err: "",
+    data: {},
+    message: "Malformed Request | Bad Request"
+}
+
 
 const validateMovieCreateRequest = (req, res, next) => {
-    const { name, description, duration, rating, cast, genre, language } = req.body;
 
-    let errors = [];
+    //Validate the movie 
+    if (!req.body.name) {
+        badRequestResponse.err = "The movie is not present in the request";
+        return res.status(400).json(badRequestResponse);
+    }
 
-    if (!name) errors.push("Movie name is required");
-    if (!description) errors.push("Movie description is required");
-    if (!duration) errors.push("Movie duration is required");
-    if (!rating) errors.push("Movie rating is required");
-    if (!cast) errors.push("Movie cast is required");
-    if (!genre) errors.push("Movie genre is required");
-    if (!language) errors.push("Movie language is required");
+    //Validate the movie description
+    if (!req.body.description) {
+        badRequestResponse.err = "The description of movie is not present in request";
+        return res.status(400).json(badRequestResponse);
+    }
 
-    if (errors.length > 0) {
+    //validate the movie cast
+    if (!req.body.casts) {
+        badRequestResponse.err = "The cast of movie is not present in the request";
+        return res.status(400).json(badRequestResponse);
+    }
+
+
+    //validate the movie cast
+    if (
+        !req.body.casts ||
+        !Array.isArray(req.body.casts) ||
+        req.body.casts.length <= 0
+    ) {
         return res.status(400).json({
             success: false,
-            error: errors,
-            data: {},
-            message: "Invalid movie create request"
+            error: "The cast of the movie is not present in the request",
+            data: {}
         });
     }
 
-    next(); // continue to controller
+    //validate the movie trailer url
+    if(!req.body.trailerUrl) {
+        badRequestResponse.err = "The trailerUrl of the movie is not present in the request";
+        return res.status(400).json(badRequestResponse);
+    }
+
+    //validate the release the date of movie
+    if(!req.body.releaseDate) {
+        badRequestResponse.err = "The releaseDate of the movie is not present in the request";
+        return res.status(400).json(badRequestResponse);
+    }
+
+    //Validate the director of movie
+    if(!req.body.director) {
+        badRequestResponse.err = "The director of the movie is not present in the request";
+        return res.status(400).json(badRequestResponse);
+    }
+
+
+
+    //
+    next();
+
 };
 
 module.exports = {

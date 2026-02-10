@@ -1,19 +1,18 @@
-
-const errorresponseBody = {
-    err: {},
+const createErrorResponse = (err = {}) => ({
+    err,
     data: {},
-    message: "Somethings went wrong, cannot process the request",
+    message: "Something went wrong, cannot process the request",
     success: false
-}
+});
 
-const successResponseBody = {
+const createSuccessResponse = (data = {}) => ({
     err: {},
-    data: {},
-    message: "Successfully process the request..",
+    data,
+    message: "Successfully processed the request",
     success: true
-}
+});
 
 module.exports = {
-    errorresponseBody,
-    successResponseBody
-}
+    createErrorResponse,
+    createSuccessResponse
+};
